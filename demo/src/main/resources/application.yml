@@ -1,0 +1,5 @@
+cars:
+  maxCar: 3
+  sortable:
+    - id
+    - model
