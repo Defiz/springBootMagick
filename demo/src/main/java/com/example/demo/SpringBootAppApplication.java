@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.repository.CarRepository;
-import com.example.demo.service.CarService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

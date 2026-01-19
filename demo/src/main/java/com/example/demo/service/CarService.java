@@ -4,6 +4,8 @@ import com.example.demo.config.CarConfig;
 import com.example.demo.model.Car;
 import com.example.demo.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,23 +30,13 @@ public class CarService {
     }
 
     public List<Car> getCar(int count, String sortBy) {
-        List<Car> cars = carRepository.findAll();
+        int limit = Math.min(count, carConfig.getMaxCar());
         if (sortBy != null) {
             if (!carConfig.getSortable().contains(sortBy)) {
                 throw new IllegalArgumentException("sort not supported");
             }
-            switch (sortBy) {
-                case "id":
-                    cars.sort(Comparator.comparing(Car::getId));
-                    break;
-                case "model":
-                    cars.sort(Comparator.comparing(Car::getModel));
-                    break;
-            }
         }
-        int limit = Math.min(count, carConfig.getMaxCar());
-        return cars.stream()
-                .limit(limit)
-                .toList();
+        PageRequest pageRequest = PageRequest.of(0, limit, Sort.by(sortBy));
+        return carRepository.findAll(pageRequest).getContent();
     }
 }
