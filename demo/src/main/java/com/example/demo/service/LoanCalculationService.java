@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 public class LoanCalculationService {
 
     private final LoanConfig loanConfig;
-    private final LoanService loanService;
+    private final IncomeService incomeService;
     private final CarRepository carRepository;
+    private final int MONTHS = 12;
 
     @Autowired
-    public LoanCalculationService(LoanConfig loanConfig1, LoanService loanService, CarRepository carRepository) {
+    public LoanCalculationService(LoanConfig loanConfig1, IncomeService incomeService, CarRepository carRepository) {
         this.loanConfig = loanConfig1;
-        this.loanService = loanService;
+        this.incomeService = incomeService;
         this.carRepository = carRepository;
     }
 
@@ -31,14 +32,15 @@ public class LoanCalculationService {
         if (income < loanConfig.getMinimalIncome()) {
             return 0;
         }
-        return (int) (income * loanConfig.getIncome().getYearlyMultiplier() * loanConfig.getIncome().getMaxPercentage());
+        return (int) (income * MONTHS * loanConfig.getIncome().getMaxPercentage());
     }
 
     public Integer calculateMaxCreditByUser(Integer userId) {
-        Integer userIncome = loanService.getIncomeById(userId);
+        Integer userIncome = incomeService.getIncomeById(userId);
         Car userCar = carRepository.findByUserId(userId);
         Integer maxByCar = maxByCar(userCar);
         Integer maxByIncome = maxByIncome(userIncome);
         return Math.max(maxByIncome, maxByCar);
     }
 }
+

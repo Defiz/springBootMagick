@@ -1,16 +1,39 @@
+spring:
+  application:
+    name: SpringBootApp
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/spring
+    username: postgres
+    password: 247316
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+# Cars properties
 cars:
-  maxCar: 3
+  max-car: 3
   sortable:
     - id
     - model
 
+# Loan properties
 loan:
   minimal-income: 40000
   minimal-car-price: 1000000
 
   income:
-    yearly-multiplier: 12
     max-percentage: 0.5
 
   car:
     max-percentage: 0.3
+
+# Income api properties
+income-api-url:
+  url: https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income

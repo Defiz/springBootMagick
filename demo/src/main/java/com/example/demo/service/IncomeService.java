@@ -3,7 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.LoanDto;
 import com.example.demo.exeption.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -13,21 +16,18 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class LoanService {
+@ConfigurationProperties(prefix = "income-api-url")
+@Setter
+public class IncomeService {
 
+    private String url;
     private final RestTemplate restTemplate;
     private final UserRepository userRepository;
 
     @Autowired
-    public LoanService(RestTemplate restTemplate, UserRepository userRepository) {
+    public IncomeService(RestTemplate restTemplate, UserRepository userRepository) {
         this.restTemplate = restTemplate;
         this.userRepository = userRepository;
-    }
-
-    public List<LoanDto> getAllIncomes() {
-        String url = "https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income";
-        LoanDto[] response = restTemplate.getForObject(url, LoanDto[].class);
-        return Arrays.asList(response);
     }
 
     public Integer getIncomeById(Integer userId) {
@@ -40,5 +40,10 @@ public class LoanService {
                 .map(LoanDto::getIncome)
                 .findFirst()
                 .orElse(0);
+    }
+
+    public List<LoanDto> getAllIncomes() {
+        LoanDto[] response = restTemplate.getForObject(url, LoanDto[].class);
+        return Arrays.asList(response);
     }
 }

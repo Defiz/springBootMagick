@@ -1,8 +1,16 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import org.apache.catalina.Engine;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -22,53 +30,4 @@ public class Car {
 
     @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
     private User user;
-
-    public Car(String model, int series, Long price) {
-        this.price = price;
-        this.model = model;
-        this.series = series;
-    }
-
-    public Car() {
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getSeries() {
-        return series;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setSeries(int series) {
-        this.series = series;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
