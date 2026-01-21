@@ -3,3 +3,14 @@ cars:
   sortable:
     - id
     - model
+
+loan:
+  minimal-income: 40000
+  minimal-car-price: 1000000
+
+  income:
+    yearly-multiplier: 12
+    max-percentage: 0.5
+
+  car:
+    max-percentage: 0.3

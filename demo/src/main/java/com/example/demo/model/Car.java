@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import org.apache.catalina.Engine;
 
 @Entity
 @Table(name = "cars")
@@ -16,7 +17,14 @@ public class Car {
     @Column(name = "series")
     private int series;
 
-    public Car(String model, int series) {
+    @Column(name = "price")
+    private Long price;
+
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+    private User user;
+
+    public Car(String model, int series, Long price) {
+        this.price = price;
         this.model = model;
         this.series = series;
     }
@@ -46,5 +54,21 @@ public class Car {
 
     public void setSeries(int series) {
         this.series = series;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
