@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.config.IncomeConfig;
 import com.example.demo.dto.LoanDto;
 import com.example.demo.exeption.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -14,21 +15,15 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 @Transactional(readOnly = true)
-@ConfigurationProperties(prefix = "income-api-url")
-@Setter
 public class IncomeService {
 
-    private String url;
+    private final IncomeConfig incomeConfig;
     private final RestTemplate restTemplate;
     private final UserRepository userRepository;
 
-    @Autowired
-    public IncomeService(RestTemplate restTemplate, UserRepository userRepository) {
-        this.restTemplate = restTemplate;
-        this.userRepository = userRepository;
-    }
 
     public Integer getIncomeById(Integer userId) {
         boolean userExists = userRepository.existsById(userId);
@@ -43,7 +38,7 @@ public class IncomeService {
     }
 
     public List<LoanDto> getAllIncomes() {
-        LoanDto[] response = restTemplate.getForObject(url, LoanDto[].class);
+        LoanDto[] response = restTemplate.getForObject(incomeConfig.getUrl(), LoanDto[].class);
         return Arrays.asList(response);
     }
 }

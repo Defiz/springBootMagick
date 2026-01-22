@@ -3,9 +3,10 @@ package com.example.demo.service;
 import com.example.demo.config.LoanConfig;
 import com.example.demo.model.Car;
 import com.example.demo.repository.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class LoanCalculationService {
 
@@ -14,12 +15,6 @@ public class LoanCalculationService {
     private final CarRepository carRepository;
     private final int MONTHS = 12;
 
-    @Autowired
-    public LoanCalculationService(LoanConfig loanConfig1, IncomeService incomeService, CarRepository carRepository) {
-        this.loanConfig = loanConfig1;
-        this.incomeService = incomeService;
-        this.carRepository = carRepository;
-    }
 
     public Integer maxByCar(Car car) {
         if (car.getPrice() < loanConfig.getMinimalCarPrice()) {
