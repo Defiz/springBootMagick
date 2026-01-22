@@ -22,23 +22,13 @@ public class IncomeService {
 
     private final IncomeConfig incomeConfig;
     private final RestTemplate restTemplate;
-    private final UserRepository userRepository;
-
 
     public Integer getIncomeById(Integer userId) {
-        boolean userExists = userRepository.existsById(userId);
-        if (!userExists) {
-            throw new UserNotFoundException("User not found");
-        }
-        return getAllIncomes().stream()
-                .filter(i -> i.getId().equals(userId))
+        LoanDto[] response = restTemplate.getForObject(incomeConfig.getUrl(), LoanDto[].class);
+        return Arrays.stream(response)
+                .filter(loan -> loan.getId().equals(userId))
                 .map(LoanDto::getIncome)
                 .findFirst()
                 .orElse(0);
-    }
-
-    public List<LoanDto> getAllIncomes() {
-        LoanDto[] response = restTemplate.getForObject(incomeConfig.getUrl(), LoanDto[].class);
-        return Arrays.asList(response);
     }
 }
