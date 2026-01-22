@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 @Transactional(readOnly = true)
+
 public class CarService {
 
     private final CarRepository carRepository;
