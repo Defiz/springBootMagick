@@ -17,7 +17,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-@Transactional(readOnly = true)
 public class IncomeService {
 
     private final IncomeConfig incomeConfig;
