@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.config.LoanConfig;
 import com.example.demo.model.Car;
 import com.example.demo.repository.CarRepository;
+import com.example.income.client.IncomeClient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class LoanCalculationService {
 
     private final LoanConfig loanConfig;
-    private final IncomeService incomeService;
+    private final IncomeClient incomeClient;
     private final CarRepository carRepository;
     private final int MONTHS = 12;
 
@@ -31,7 +32,7 @@ public class LoanCalculationService {
     }
 
     public Integer calculateMaxCreditByUser(Integer userId) {
-        Integer userIncome = incomeService.getIncomeById(userId);
+        Integer userIncome = incomeClient.getIncomeById(userId);
         Car userCar = carRepository.findByUserId(userId);
         Integer maxByCar = maxByCar(userCar);
         Integer maxByIncome = maxByIncome(userIncome);

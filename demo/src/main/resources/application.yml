@@ -34,6 +34,6 @@ loan:
   car:
     max-percentage: 0.3
 
-# Income api properties
-income-api-url:
-  url: https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income
+## Income api properties
+#income-api-url:
+#  url: https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income

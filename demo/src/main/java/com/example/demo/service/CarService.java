@@ -4,7 +4,6 @@ import com.example.demo.config.CarConfig;
 import com.example.demo.model.Car;
 import com.example.demo.repository.CarRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
